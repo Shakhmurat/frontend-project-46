@@ -10,7 +10,6 @@ export default (filepath1, filepath2) => {
   const data1 = JSON.parse(readFile(filepath1));
   const data2 = JSON.parse(readFile(filepath2));
   const keys = sortBy(union(Object.keys(data1), Object.keys(data2)));
-  
   const result = keys.reduce((acc, key) => {
     if (!Object.hasOwn(data1, key)) {
       acc.push(`+ ${key}: ${data2[key]}`);
