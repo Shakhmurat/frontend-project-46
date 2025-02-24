@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { resolve, extname } from 'path';
+import { union, sortBy } from 'lodash-es';
 import parse from './parsers.js';
-import { union, sortBy } from 'lodash-es'
 
 const getFilePath = (filename) => resolve(process.cwd(), '__fixtures__', filename);
 const getFileContent = (filename) => fs.readFileSync(getFilePath(filename), 'utf-8');
