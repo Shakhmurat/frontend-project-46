@@ -1,14 +1,14 @@
 import fs from 'fs';
-import path from 'path';
-import union from 'lodash/union.js';
-import sortBy from 'lodash/sortBy.js';
+import { resolve, extname } from 'path';
+import { union, sortBy } from 'lodash-es';
+import parse from './parsers.js';
 
-const getFilePath = (filename) => path.resolve(process.cwd(), '__fixtures__', filename);
-const readFile = (filename) => fs.readFileSync(getFilePath(filename), 'utf-8');
+const getFilePath = (filename) => resolve(process.cwd(), '__fixtures__', filename);
+const getFileContent = (filename) => fs.readFileSync(getFilePath(filename), 'utf-8');
 
 export default (filepath1, filepath2) => {
-  const data1 = JSON.parse(readFile(filepath1));
-  const data2 = JSON.parse(readFile(filepath2));
+  const data1 = parse(getFileContent(filepath1), extname(filepath1));
+  const data2 = parse(getFileContent(filepath2), extname(filepath2));
   const keys = sortBy(union(Object.keys(data1), Object.keys(data2)));
   const result = keys.reduce((acc, key) => {
     if (!Object.hasOwn(data1, key)) {
