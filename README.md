@@ -9,3 +9,6 @@ Generate difference between json files without nested keys
 
 Generate difference between yaml files without nested keys
 [![asciicast](https://asciinema.org/a/705122.svg)](https://asciinema.org/a/705122)
+
+Generate difference between json and yaml files with nested keys
+[![asciicast](https://asciinema.org/a/707107.svg)](https://asciinema.org/a/707107)
