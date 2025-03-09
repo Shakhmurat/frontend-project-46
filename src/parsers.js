@@ -1,9 +1,11 @@
 import yaml from 'js-yaml';
 
 export default (data, format) => {
-  if (format === '.yml' || format === '.yaml') {
-    return yaml.load(data);
+  switch (format) {
+    case '.yml':
+    case '.yaml':
+      return yaml.load(data);
+    default:
+      return JSON.parse(data);
   }
-
-  return JSON.parse(data);
 };
