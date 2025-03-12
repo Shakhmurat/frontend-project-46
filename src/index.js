@@ -18,6 +18,26 @@ import formatter from './formatters/index.js';
 const getFilePath = (filename) => resolve(process.cwd(), '__fixtures__', filename);
 const getFileContent = (filename) => readFileSync(getFilePath(filename), 'utf-8');
 
+const buildNode = (key, value, type) => ({ key, value, type });
+const getBuiltNode = (key, data1, data2) => {
+  const value1 = data1[key];
+  const value2 = data2[key];
+
+  if (!Object.hasOwn(data1, key)) {
+    return buildNode(key, value2, added);
+  }
+
+  if (!Object.hasOwn(data2, key)) {
+    return buildNode(key, value1, deleted);
+  }
+
+  if (value1 !== value2) {
+    return buildNode(key, [value1, value2], updated);
+  }
+
+  return buildNode(key, value1, unchanged);
+};
+
 const buildDiff = (data1, data2) => {
   const keys = sortBy(union(Object.keys(data1), Object.keys(data2)));
 
@@ -30,23 +50,7 @@ const buildDiff = (data1, data2) => {
       };
     }
 
-    if (!Object.hasOwn(data1, key)) {
-      return { key, value: data2[key], type: added };
-    }
-
-    if (!Object.hasOwn(data2, key)) {
-      return { key, value: data1[key], type: deleted };
-    }
-
-    if (data1[key] !== data2[key]) {
-      return {
-        key,
-        value: [data1[key], data2[key]],
-        type: updated,
-      };
-    }
-
-    return { key, value: data1[key], type: unchanged };
+    return getBuiltNode(key, data1, data2);
   });
 };
 
