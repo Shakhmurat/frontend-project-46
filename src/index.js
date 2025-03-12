@@ -21,7 +21,7 @@ const getFileContent = (filename) => readFileSync(getFilePath(filename), 'utf-8'
 const buildDiff = (data1, data2) => {
   const keys = sortBy(union(Object.keys(data1), Object.keys(data2)));
 
-  return keys.flatMap((key) => {
+  return keys.map((key) => {
     if (isPlainObject(data1[key]) && isPlainObject(data2[key])) {
       return {
         key,
@@ -39,13 +39,11 @@ const buildDiff = (data1, data2) => {
     }
 
     if (data1[key] !== data2[key]) {
-      return [
-        {
-          key,
-          value: [data1[key], data2[key]],
-          type: updated,
-        },
-      ];
+      return {
+        key,
+        value: [data1[key], data2[key]],
+        type: updated,
+      };
     }
 
     return { key, value: data1[key], type: unchanged };
