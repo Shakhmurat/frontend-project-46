@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { resolve, extname } from 'path';
 import {
   union,
@@ -57,8 +57,5 @@ const buildDiff = (data1, data2) => {
 export default (filepath1, filepath2, formatName = 'stylish') => {
   const data1 = parse(getFileContent(filepath1), extname(filepath1));
   const data2 = parse(getFileContent(filepath2), extname(filepath2));
-  const diff = buildDiff(data1, data2);
-  const result = formatter(diff, formatName);
-  writeFileSync(getFilePath('result.txt'), result, 'utf-8');
-  return formatter(diff, formatName);
+  return formatter(buildDiff(data1, data2), formatName);
 };
