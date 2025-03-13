@@ -47,3 +47,23 @@ describe('genDiff when format is plain', () => {
     expect(actual).toBe(expected);
   });
 });
+
+describe('genDiff when format is json', () => {
+  it('json with nested keys', () => {
+    const actual = genDiff('file1.yml', 'file2.yaml', 'json');
+    const expected = getFixtureContent('expected-json.txt');
+    expect(actual).toBe(expected);
+  });
+
+  it('yaml and json with nested keys', () => {
+    const actual = genDiff('file1.yml', 'file2.json', 'json');
+    const expected = getFixtureContent('expected-json.txt');
+    expect(actual).toBe(expected);
+  });
+
+  it('yaml files with nested keys', () => {
+    const actual = genDiff('file1.yml', 'file2.yaml', 'json');
+    const expected = getFixtureContent('expected-json.txt');
+    expect(actual).toBe(expected);
+  });
+});
