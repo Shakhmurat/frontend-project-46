@@ -55,5 +55,5 @@ export default (diff) => {
       .join('')
   );
 
-  return iter(diff).trim();
+  return iter(diff).trimRight();
 };
